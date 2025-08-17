@@ -1,164 +1,203 @@
 # 🎯 SYSTÈME INTELLIGENT DE CRÉATION D'ISSUES GITHUB AGENTOVA
 
-## 📋 **VUE D'ENSEMBLE**
+## 🧩 **COMPRÉHENSION - À QUOI ÇA SERT**
 
-Ce système révolutionne la création d'issues GitHub en utilisant l'intelligence artificielle pour guider et structurer le processus. Il garantit que chaque issue contient tous les détails techniques nécessaires pour les développeurs.
+Ce système permet d'améliorer et créer des issues GitHub ultra-détaillées en utilisant l'intelligence artificielle. Il inclut aussi des outils pour récupérer de la documentation technique.
 
-## 🏗️ **ARCHITECTURE**
+**🎯 Objectifs principaux :**
+- **Issues intelligentes** : Transformer une demande floue en spécifications techniques précises
+- **Documentation** : Récupérer facilement toute la documentation d'un site web
+
+## 🏗️ **ARCHITECTURE RÉELLE**
 
 ```
 .agentova-tools/
-├── .cursor/                   # Configuration Cursor pour l'IA
-│   ├── rules/
-│   │   └── issue-management.mdc
-│   └── issue-creator-instructions.md
-├── github-issues/             # Gestion complète des issues
-│   ├── templates/             # Templates par type d'issue
-│   │   ├── feature.md
-│   │   ├── bugfix.md
-│   │   ├── enhancement.md
-│   │   └── infrastructure.md
-│   ├── drafts/               # Brouillons en cours de création
-│   └── scripts/              # Scripts API GitHub
-│       └── github-api.js
-├── documentation/            # Documentation partagée
-│   ├── project-overview.md
-│   ├── architecture-global.md
-│   └── development-guidelines.md
-└── README.md                 # Ce fichier
+├── issue-generator/           # 🎯 Système principal d'amélioration d'issues
+│   ├── ai-script.md          # 📋 Guide complet pour l'IA
+│   └── drafts/              # 💾 Brouillons générés
+├── site-scaper/              # 🕷️ Outils de scraping documentation
+│   ├── site-scraper.py       # Script de téléchargement sites web
+│   └── USAGE-SITE-SCRAPER.md # Guide d'utilisation du scraper
+├── project-context.md        # 🏗️ Contexte global des 3 projets Agentova
+├── github-api.py            # 🔧 Scripts interaction GitHub API
+├── requirements.txt          # 📦 Dépendances Python
+└── README.md                # 📖 Ce fichier
 ```
 
-## 🚀 **DÉMARRAGE RAPIDE**
+## 🛠️ **INSTALLATION**
 
-### 1. **Configuration initiale :**
+### **1. Structure de dossier obligatoire**
+
+**⚠️ CRITIQUE :** Tous les projets Agentova doivent être dans le même dossier parent :
+
+```
+📁 Agentova/ (dossier parent)
+├── 📁 .agentova-tools/          # 🎯 Ce système
+├── 📁 sass-agentova-ai/         # 🚀 Projet principal (React/Firebase)
+├── 📁 api-agent-agentova-ai/    # 🤖 API IA (FastAPI/Google ADK)
+└── 📁 chat-widget-agentova-ai/  # 💬 Widget de chat
+```
+
+
+
+### **2. Configuration GitHub API (optionnelle)**
+
+**Pour utiliser `github-api.py` qui récupère les issues existantes :**
+
 ```bash
-cd .agentova-tools/github-issues/scripts
-npm init -y
-npm install @octokit/rest dotenv
+# Dans .agentova-tools/
+pip install -r requirements.txt
 ```
 
-### 2. **Variables d'environnement :**
 ```bash
-# Créer .env dans scripts/
-GITHUB_TOKEN=your_github_token_here
-GITHUB_OWNER=votre-organisation
-GITHUB_REPO_SASS=sass-agentova-ai
-GITHUB_REPO_MOBILE=agentova-mobile
-GITHUB_REPO_ADMIN=agentova-admin
+# Créer un fichier .env dans .agentova-tools/
+echo "GITHUB_TOKEN=votre_token_github_ici" > .env
 ```
 
-### 3. **Utilisation avec Cursor :**
+**Comment obtenir un token GitHub :**
+1. GitHub → Settings → Developer settings → Personal access tokens
+2. Créer un nouveau token avec permission "repo"
+3. Copier le token dans le fichier `.env`
+
+**⚠️ Sans token :** `github-api.py` ne fonctionnera pas, mais l'amélioration d'issues via Cursor fonctionne quand même.
+
+## 🚀 **UTILISATION - 2 OUTILS PRINCIPAUX**
+
+### **🎯 1. Améliorer une issue**
+
 ```
-@issue-creator Nouvelle fonctionnalité : Amélioration du chat avec IA
+@issue-improve
 ```
 
-## 🎯 **WORKFLOW COMPLET**
+L'IA va automatiquement récupérer toutes les issues GitHub et vous aider à les améliorer.
 
-### **Étape 1 : Déclenchement**
-L'utilisateur déclenche la création avec une commande Cursor :
-- `@issue-creator [description]`
-- `🎯 Nouvelle issue : [description]`
-- `Créer une issue pour [description]`
+### **🕷️ 2. Récupérer de la documentation**
 
-### **Étape 2 : Questionnaire intelligent**
-L'IA pose des questions structurées selon le type d'issue :
+```bash
+# Télécharger toutes les pages d'un site de documentation
+python site-scaper/site-scraper.py https://docs.example.com
 
-#### 📝 **Pour une FEATURE :**
-1. **Contexte métier** : Pourquoi cette fonctionnalité ?
-2. **Spécifications techniques** : Quels composants modifier ?
-3. **Interface utilisateur** : Comment ça doit apparaître ?
-4. **Critères d'acceptation** : Comment valider la réussite ?
-5. **Dépendances** : Quels autres éléments sont impactés ?
+# Voir le guide complet
+cat site-scaper/USAGE-SITE-SCRAPER.md
+```
 
-#### 🐛 **Pour un BUG :**
-1. **Reproduction** : Étapes exactes pour reproduire
-2. **Environnement** : OS, navigateur, version
-3. **Impact** : Gravité et utilisateurs affectés
-4. **Comportement** : Attendu vs actuel
+**⚠️ Note :** Ce scraper est utile mais Cursor a maintenant une fonctionnalité intégrée pour récupérer la documentation web. Le scraper reste utile pour certains cas spécifiques.
 
-### **Étape 3 : Validation**
-L'IA vérifie :
-- ✅ Complétude des informations
-- ✅ Cohérence avec l'architecture Agentova
-- ✅ Respect des patterns établis
-- ✅ Sécurité workspace-centric
+### **📋 3. Lister les issues existantes**
 
-### **Étape 4 : Génération**
-- Création d'un draft dans `drafts/`
-- Application du template approprié
-- Suggestion de labels et assignations
-- Validation finale par l'utilisateur
+```bash
+# Lister toutes les issues ouvertes du projet principal
+python github-api.py list sass
 
-### **Étape 5 : Publication**
-- Création automatique sur GitHub
-- Application des labels
-- Notification de l'équipe
-- Archivage du draft
+# Lister pour les autres projets
+python github-api.py list api
+python github-api.py list widget
+```
 
-## 📋 **TYPES D'ISSUES SUPPORTÉS**
+**Nécessite :** Configuration du token GitHub dans `.env`
 
-| Type | Template | Usage |
-|------|----------|-------|
-| 🚀 **Feature** | `feature.md` | Nouvelles fonctionnalités |
-| 🐛 **Bug** | `bugfix.md` | Corrections de problèmes |
-| ⚡ **Enhancement** | `enhancement.md` | Améliorations existantes |
-| 🏗️ **Infrastructure** | `infrastructure.md` | Modifications techniques |
+### **📋 ÉTAPES OBLIGATOIRES AVANT DE COMMENCER**
 
-## 🎯 **PROJETS SUPPORTÉS**
+**⚠️ CRITICAL :** Il faut ABSOLUMENT charger ces 3 fichiers dans Cursor :
 
-- **sass-agentova-ai** : Projet principal (React/Firebase)
-- **agentova-mobile** : Application mobile (React Native)
-- **agentova-admin** : Interface d'administration
+1. **📂 Glisser le dossier `.cursor/`** du projet concerné
+2. **📄 Attacher `project-context.md`** (contexte global des 3 projets)  
+3. **📄 Attacher `ai-script.md`** (guide complet pour l'IA)
 
-## 🔧 **CONFIGURATION AVANCÉE**
+**Exemple pour une issue sass-agentova-ai :**
+```
+📂 Fichiers à attacher OBLIGATOIREMENT :
+├── 📁 .agentova-tools/project-context.md # ✅ OBLIGATOIRE - Contexte global
+├── 📁 .agentova-tools/ai-script.md       # ✅ OBLIGATOIRE - Guide IA
+├── 📁 sass-agentova-ai/.cursor/          # ✅ OBLIGATOIRE - Règles projet
+└── 📁 api-agent-agentova-ai/.cursor/     # ✅ OBLIGATOIRE - Règles projet
+```
 
-### **Labels automatiques :**
-- `type:feature`, `type:bug`, `type:enhancement`, `type:infrastructure`
-- `priority:high`, `priority:medium`, `priority:low`
-- `component:frontend`, `component:backend`, `component:shared`
-- `project:sass`, `project:mobile`, `project:admin`
+### **🤔 Ce qui va se passer**
 
-### **Assignation intelligente :**
-- Frontend → Développeurs React
-- Backend → Développeurs Firebase
-- Mobile → Développeurs React Native
-- Infrastructure → DevOps/Lead
+1. **L'IA pose des questions précises** selon `ai-script.md`
+2. **Tu réponds avec les détails techniques**
+3. **L'IA génère un fichier markdown ultra-détaillé** 
+4. **Validation** puis publication automatique sur GitHub
 
-## 📊 **AVANTAGES**
+## 📚 **FICHIERS CRITIQUES À CONNAÎTRE**
 
-### ✅ **Pour le Product Owner :**
-- Processus guidé et structuré
-- Aucun détail technique oublié
-- Issues complètes dès la création
-- Vision globale des 3 projets
+### **🏗️ `project-context.md` - LE FICHIER ESSENTIEL**
 
-### ✅ **Pour les Développeurs :**
-- Spécifications claires et complètes
-- Contexte technique détaillé
-- Critères d'acceptation précis
-- Moins d'aller-retours
+**⚠️ CRITICAL :** Ce fichier contient TOUT le contexte des 3 projets Agentova :
 
-### ✅ **Pour l'Équipe :**
-- Standardisation des issues
-- Amélioration de la communication
-- Traçabilité et documentation
-- Gain de temps global
+- 📋 **Structure des 3 projets** (sass-agentova-ai, api-agent-agentova-ai, chat-widget-agentova-ai)
+- 🏗️ **Architecture technique** détaillée (Frontend, Backend, IA, Widget)
+- 🎯 **Patterns obligatoires** (sécurité workspace-centric, types, etc.)
+- 🏷️ **Assignations par expertise** (qui développe quoi)
+- 🤔 **Questions intelligentes** à poser pour chaque projet
 
-## 🛠️ **MAINTENANCE**
+**Sans ce fichier, l'IA ne peut pas :**
+- ❌ Comprendre l'architecture Agentova
+- ❌ Poser les bonnes questions techniques
+- ❌ Respecter les patterns établis
+- ❌ Identifier les bons fichiers à modifier
 
-### **Mise à jour des templates :**
-Les templates dans `templates/` peuvent être modifiés selon l'évolution des besoins.
+### **📋 `ai-script.md` - LE GUIDE COMPLET**
 
-### **Amélioration de l'IA :**
-Les instructions dans `.cursor/` peuvent être affinées pour améliorer la pertinence des questions.
+Ce fichier contient :
+- 🤔 **16 questions obligatoires** à poser pour chaque issue
+- 📝 **Format exact** du fichier markdown à générer
+- 🔧 **Règles absolues** (jamais inventer, toujours demander)
+- 🚨 **Solutions aux problèmes** rencontrés précédemment
 
-### **Nouveaux projets :**
-Ajouter simplement un nouveau repository dans la configuration.
+### **⚙️ Règles `.cursor/` - L'ARCHITECTURE PROJET**
 
-## 📞 **SUPPORT**
+Chaque projet a ses propres règles dans `.cursor/` :
+- 🏗️ **Patterns architecturaux** spécifiques
+- 🔐 **Sécurité workspace-centric** 
+- 📊 **Validation des données**
+- 🎯 **Conventions de nommage**
 
-Pour toute question ou amélioration du système, créer une issue en utilisant... ce même système ! 😉
+## 🎯 **LES 3 PROJETS AGENTOVA**
+
+### **📱 sass-agentova-ai** - Projet principal
+- **Frontend** : React + modules (ChatModule, CustomAgentModule, etc.)
+- **Backend** : Firebase Functions + repositories PostgreSQL
+- **Sécurité** : Workspace-centric obligatoire
+
+### **🤖 api-agent-agentova-ai** - API IA  
+- **Type** : FastAPI + Google ADK
+- **Rôle** : Traitement IA, génération réponses agents
+- **Communication** : SSE streaming pour chat temps réel
+
+### **💬 chat-widget-agentova-ai** - Widget embeddable
+- **Type** : JavaScript vanilla embeddable
+- **Rôle** : Interface chat pour sites clients
+
+## 🚨 **CHECKLIST AVANT D'AMÉLIORER UNE ISSUE**
+
+### ✅ **Vérifications OBLIGATOIRES :**
+
+1. [ ] **📁 Structure** : Tous les projets dans le même dossier parent Agentova ?
+2. [ ] **📄 project-context.md** : Fichier attaché dans Cursor ?  
+3. [ ] **📄 ai-script.md** : Guide IA attaché dans Cursor ?
+4. [ ] **📁 .cursor/** : Règles du projet concerné attachées ?
+5. [ ] **📁 shared/** : Types du projet attachés si nécessaire ?
+
+### ❌ **Erreurs qui font échouer le processus :**
+
+- **Oublier `project-context.md`** → L'IA ne comprend pas l'architecture
+- **Oublier `ai-script.md`** → L'IA ne pose pas les bonnes questions  
+- **Mélanger les règles** de plusieurs projets → Incohérences
+- **Ne pas identifier le projet** → Spécifications génériques inutiles
+
+## 🎯 **RÉSULTAT ATTENDU**
+
+Une issue GitHub ultra-détaillée avec :
+- 🎯 **Objectif précis** et contexte métier
+- 📁 **Fichiers exacts** à modifier avec emplacements
+- 🔧 **Spécifications techniques** complètes  
+- ⚠️ **Points critiques** à ne pas rater
+- ✅ **Critères de validation** clairs
+
+**L'objectif :** N'importe quel développeur peut implémenter sans poser de questions !
 
 ---
 
-*Système créé pour optimiser la gestion des issues dans l'écosystème Agentova* 🎯
+*🎯 Système d'amélioration d'issues Agentova - Transforme des demandes floues en spécifications précises*
