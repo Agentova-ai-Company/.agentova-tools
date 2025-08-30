@@ -1,20 +1,26 @@
 # 🎯 SYSTÈME INTELLIGENT DE CRÉATION D'ISSUES GITHUB AGENTOVA
 
+## 🎥 **VIDÉO EXPLICATIVE COMPLÈTE**
+
+**🔗 [Regarder la vidéo Loom - Tout est expliqué dedans](https://www.loom.com/share/8c449e4962e14699a1266c0d8da08f36?sid=498c9e05-cd88-4284-9138-2d5da1356619)**
+
+Cette vidéo montre en détail comment utiliser le système de création de drafts d'issues.
+
 ## 🧩 **COMPRÉHENSION - À QUOI ÇA SERT**
 
-Ce système permet d'améliorer et créer des issues GitHub ultra-détaillées en utilisant l'intelligence artificielle. Il inclut aussi des outils pour récupérer de la documentation technique.
+Ce système permet de créer des drafts d'issues ultra-détaillées en utilisant l'intelligence artificielle. Il inclut aussi des outils pour récupérer de la documentation technique.
 
 **🎯 Objectifs principaux :**
-- **Issues intelligentes** : Transformer une demande floue en spécifications techniques précises
+- **Drafts d'issues intelligents** : Transformer une demande floue en spécifications techniques précises sauvegardées localement
 - **Documentation** : Récupérer facilement toute la documentation d'un site web
 
 ## 🏗️ **ARCHITECTURE RÉELLE**
 
 ```
 .agentova-tools/
-├── issue-generator/           # 🎯 Système principal d'amélioration d'issues
+├── issue-generator/           # 🎯 Système principal de création de drafts d'issues
 │   ├── ai-script.md          # 📋 Guide complet pour l'IA
-│   └── drafts/              # 💾 Brouillons générés
+│   └── drafts/              # 💾 Drafts générés (format: [titre-court].md)
 ├── site-scaper/              # 🕷️ Outils de scraping documentation
 │   ├── site-scraper.py       # Script de téléchargement sites web
 │   └── USAGE-SITE-SCRAPER.md # Guide d'utilisation du scraper
@@ -38,38 +44,15 @@ Ce système permet d'améliorer et créer des issues GitHub ultra-détaillées e
 └── 📁 chat-widget-agentova-ai/  # 💬 Widget de chat
 ```
 
-
-
-### **2. Configuration GitHub API (optionnelle)**
-
-**Pour utiliser `github-api.py` qui récupère les issues existantes :**
-
-```bash
-# Dans .agentova-tools/
-pip install -r requirements.txt
-```
-
-```bash
-# Créer un fichier .env dans .agentova-tools/
-echo "GITHUB_TOKEN=votre_token_github_ici" > .env
-```
-
-**Comment obtenir un token GitHub :**
-1. GitHub → Settings → Developer settings → Personal access tokens
-2. Créer un nouveau token avec permission "repo"
-3. Copier le token dans le fichier `.env`
-
-**⚠️ Sans token :** `github-api.py` ne fonctionnera pas, mais l'amélioration d'issues via Cursor fonctionne quand même.
-
 ## 🚀 **UTILISATION - 2 OUTILS PRINCIPAUX**
 
-### **🎯 1. Améliorer une issue**
+### **🎯 1. Créer un draft d'issue**
 
 ```
-@issue-improve
+@issue-create
 ```
 
-L'IA va automatiquement récupérer toutes les issues GitHub et vous aider à les améliorer.
+L'IA va poser toutes les questions nécessaires et générer un draft détaillé dans le dossier `drafts/`.
 
 ### **🕷️ 2. Récupérer de la documentation**
 
@@ -83,18 +66,19 @@ cat site-scaper/USAGE-SITE-SCRAPER.md
 
 **⚠️ Note :** Ce scraper est utile mais Cursor a maintenant une fonctionnalité intégrée pour récupérer la documentation web. Le scraper reste utile pour certains cas spécifiques.
 
-### **📋 3. Lister les issues existantes**
+### **📋 3. Résultat : Draft généré**
 
-```bash
-# Lister toutes les issues ouvertes du projet principal
-python github-api.py list sass
+Après avoir utilisé `@issue-create`, tu obtiendras :
 
-# Lister pour les autres projets
-python github-api.py list api
-python github-api.py list widget
+```
+.agentova-tools/issue-generator/drafts/[titre-court].md
 ```
 
-**Nécessite :** Configuration du token GitHub dans `.env`
+**Le draft contient :**
+- 🎯 Spécifications techniques précises
+- 📁 Fichiers exacts à modifier
+- ⚠️ Points critiques
+- ✅ Critères de validation
 
 ### **📋 ÉTAPES OBLIGATOIRES AVANT DE COMMENCER**
 
@@ -117,8 +101,9 @@ python github-api.py list widget
 
 1. **L'IA pose des questions précises** selon `ai-script.md`
 2. **Tu réponds avec les détails techniques**
-3. **L'IA génère un fichier markdown ultra-détaillé** 
-4. **Validation** puis publication automatique sur GitHub
+3. **L'IA génère un fichier draft markdown ultra-détaillé** 
+4. **Sauvegarde locale** dans `drafts/[titre-court].md`
+5. **Modifications possibles** du draft généré
 
 ## 📚 **FICHIERS CRITIQUES À CONNAÎTRE**
 
@@ -141,9 +126,10 @@ python github-api.py list widget
 ### **📋 `ai-script.md` - LE GUIDE COMPLET**
 
 Ce fichier contient :
-- 🤔 **16 questions obligatoires** à poser pour chaque issue
+- 🤔 **20 questions obligatoires** à poser pour chaque draft
 - 📝 **Format exact** du fichier markdown à générer
 - 🔧 **Règles absolues** (jamais inventer, toujours demander)
+- 💾 **Sauvegarde obligatoire** dans `drafts/[titre-court].md`
 - 🚨 **Solutions aux problèmes** rencontrés précédemment
 
 ### **⚙️ Règles `.cursor/` - L'ARCHITECTURE PROJET**
@@ -170,7 +156,7 @@ Chaque projet a ses propres règles dans `.cursor/` :
 - **Type** : JavaScript vanilla embeddable
 - **Rôle** : Interface chat pour sites clients
 
-## 🚨 **CHECKLIST AVANT D'AMÉLIORER UNE ISSUE**
+## 🚨 **CHECKLIST AVANT DE CRÉER UN DRAFT D'ISSUE**
 
 ### ✅ **Vérifications OBLIGATOIRES :**
 
@@ -189,15 +175,15 @@ Chaque projet a ses propres règles dans `.cursor/` :
 
 ## 🎯 **RÉSULTAT ATTENDU**
 
-Une issue GitHub ultra-détaillée avec :
+Un draft d'issue ultra-détaillé sauvegardé localement avec :
 - 🎯 **Objectif précis** et contexte métier
 - 📁 **Fichiers exacts** à modifier avec emplacements
 - 🔧 **Spécifications techniques** complètes  
 - ⚠️ **Points critiques** à ne pas rater
 - ✅ **Critères de validation** clairs
 
-**L'objectif :** N'importe quel développeur peut implémenter sans poser de questions !
+**L'objectif :** Un draft prêt à être utilisé pour créer une issue GitHub manuellement !
 
 ---
 
-*🎯 Système d'amélioration d'issues Agentova - Transforme des demandes floues en spécifications précises*
+*🎯 Système de création de drafts d'issues Agentova - Transforme des demandes floues en spécifications précises sauvegardées localement*

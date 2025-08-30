@@ -1,23 +1,13 @@
-# 🤖 SCRIPT IA - AMÉLIORATION D'ISSUES AGENTOVA
+# 🤖 SCRIPT IA - CRÉATION D'ISSUES AGENTOVA
 
 ## 🎯 **ACTIVATION SIMPLE**
 
-### **Mode unique : Amélioration d'issues existantes**
-`@issue-improve` - Récupère toutes les issues et aide à les améliorer en posant les bonnes questions
+### **Mode unique : Création de nouvelles issues**
+`@issue-create` - Aide à créer une nouvelle issue en posant les bonnes questions et en générant le fichier draft
 
-## 🚀 **PROCESSUS : QUESTIONS + ÉCRITURE**
+## 🚀 **PROCESSUS : QUESTIONS + ÉCRITURE + SAUVEGARDE**
 
-## 📋 **1. RÉCUPÉRATION AUTOMATIQUE DES ISSUES**
-
-L'IA récupère automatiquement toutes les issues avec :
-```bash
-python3 github-api.py list sass open
-python3 github-api.py list api open  
-python3 github-api.py list widget open
-```
-Tu es déjà dans le fichier pas besoin de retourner à la racine De donner le chemin global
-
-## 🤔 **2. QUESTIONS OBLIGATOIRES POUR CHAQUE ISSUE**
+## 🤔 **1. QUESTIONS OBLIGATOIRES POUR CRÉER UNE ISSUE**
 
 **RÈGLE ABSOLUE** : ❌ JAMAIS inventer d'informations ❌ 
 
@@ -51,14 +41,21 @@ Tu es déjà dans le fichier pas besoin de retourner à la racine De donner le c
 15. **"Quelles nouvelles classes/composants/services il faut créer ?"**
 16. **"Y a-t-il des dépendances avec d'autres issues ?"**
 
-## 📝 **3. ÉCRITURE EXACTE DES RÉPONSES**
+### **Questions Techniques Supplémentaires :**
+17. **"As-tu regardé des exemples similaires dans le code existant ?"**
+18. **"Quelle est la mécanique technique EXACTE que tu veux réutiliser ?"**
+19. **"Y a-t-il des callbacks/hooks existants à modifier ou créer ?"**
+20. **"Comment s'intègre cette feature avec l'architecture actuelle ?"**
+
+## 📝 **2. ÉCRITURE EXACTE DES RÉPONSES**
 
 **RÈGLE ABSOLUE** : ✅ ÉCRIRE UNIQUEMENT ce que Samy dit ✅
 
-### **Format du fichier** : `github-issues/drafts/YYYY-MM-DD-issue-[numero]-enhanced.md`
+### **OBLIGATOIRE : Sauvegarde dans drafts/**
+**Format du fichier** : `.agentova-tools/issue-generator/drafts/[titre-court].md`
 
 ```markdown
-# ISSUE #[NUMERO] - [TITRE_ORIGINAL] (VERSION AMÉLIORÉE)
+# [TITRE DE L'ISSUE]
 
 ## 🎯 QU'EST-CE QU'IL FAUT FAIRE EXACTEMENT
 [ÉCRIRE EXACTEMENT CE QUE SAMY EXPLIQUE]
@@ -84,8 +81,25 @@ Tu es déjà dans le fichier pas besoin de retourner à la racine De donner le c
 [ÉCRIRE EXACTEMENT CE QUE SAMY DÉCRIT]
 
 ---
-*Issue améliorée le [DATE] avec les explications de Samy*
+*Issue créée le [DATE] avec les explications*
 ```
+
+## 🔧 **3. WORKFLOW OBLIGATOIRE**
+
+### **Étapes à suivre EXACTEMENT :**
+1. 🔍 **Consulter `.cursor/` rules** pour comprendre l'architecture si nécessaire
+2. 🔍 **Analyser le code existant** avec `codebase_search` si nécessaire
+3. 🤔 **Poser TOUTES les questions** de compréhension (1 à 20)
+4. 💾 **OBLIGATOIRE : Sauvegarder dans `.agentova-tools/issue-generator/drafts/`** 
+5. ✅ **Validation utilisateur du draft**
+6. 🔄 **Modifications possibles du fichier draft**
+7. ✅ **TERMINÉ - Pas de publication automatique**
+
+### **RÈGLE CRITIQUE : DRAFTS UNIQUEMENT**
+- ✅ **TOUJOURS** créer le fichier dans `drafts/` 
+- ✅ **Format .md** pour le draft
+- ✅ **Permettre modifications** du fichier draft
+- ✅ **PAS de publication automatique** - Seulement génération du fichier
 
 ## 🔧 **RÈGLES OBLIGATOIRES**
 
@@ -101,35 +115,40 @@ Tu es déjà dans le fichier pas besoin de retourner à la racine De donner le c
 4. **IDENTIFIER ce qui existe déjà**
 5. **CLARIFIER les points critiques**
 
+### **💾 Gestion des fichiers drafts :**
+1. **OBLIGATOIRE** : Sauvegarder dans `drafts/` après avoir posé toutes les questions
+2. **Format de nom** : `[titre-court].md`
+3. **Permettre modifications** du fichier draft par l'utilisateur
+4. **TERMINÉ** - Pas de publication, juste génération du fichier
+
 ---
 
 ## 🚨 **DIFFICULTÉS RENCONTRÉES & SOLUTIONS**
 
-### **📍 Problème 1 : Publication GitHub API**
-**Erreur rencontrée :** `title is too long (maximum is 256 characters)`
-**Cause :** L'argument du contenu était interprété comme le titre
-**Solution :** Utiliser la syntaxe correcte pour update :
-```bash
-python3 github-api.py update sass [numero] "" "$(cat fichier.md)"
+### **📍 Problème 1 : Format des fichiers**
+**Règle :** Utiliser un format de nom simple et clair
+**Solution :** Format simplifié pour les drafts :
 ```
-- **Titre vide** ("") en 4ème position 
-- **Body du markdown** en 5ème position
-- **Ordre crucial** : [repo] [number] [title] [body]
+.agentova-tools/issue-generator/drafts/[titre-court].md
+```
+- **Nom simple** : Pas de date, juste le titre court
+- **Extension .md** obligatoire
+- **Pas de publication** automatique
 
 ### **📍 Problème 2 : Gestion des Drafts**
-**Apprentissage :** TOUJOURS sauvegarder dans `drafts/` avant publication
+**Apprentissage :** TOUJOURS sauvegarder dans `drafts/` 
 **Workflow correct :**
-1. ✅ Créer le draft : `.agentova-tools/drafts/issue-[numero]-nom.md`
+1. ✅ Créer le draft : `.agentova-tools/issue-generator/drafts/[titre-court].md`
 2. ✅ Validation utilisateur
-3. ✅ Publication avec `github-api.py update`
+3. ✅ Modifications possibles du draft
+4. ✅ TERMINÉ - Pas de publication automatique
 
 ### **📍 Problème 3 : Consultation Architecture**
 **Apprentissage :** Utiliser `fetch_rules` pour comprendre les projets
 **Pattern obligatoire :**
 ```
-fetch_rules(["api-agent-agentova-ai/agentova-architecture", 
-             "sass-agentova-ai/agentova-backend", 
-             "sass-agentova-ai/agentova-frontend"])
+fetch_rules(["api-agent-agentova-ai/README", 
+             "sass-agentova-ai/README"])
 ```
 
 ### **📍 Problème 4 : Identification des Fichiers Exacts**
@@ -149,33 +168,6 @@ codebase_search("Where are custom agent modules?", ["sass-agentova-ai/client"])
 
 ---
 
-## 🔧 **AMÉLIORATIONS DU PROCESSUS**
+## 🎯 **OBJECTIF : ZERO INVENTION - 100% QUESTIONS + ÉCRITURE + DRAFTS UNIQUEMENT**
 
-### **✅ Questions Techniques Supplémentaires :**
-17. **"As-tu regardé des exemples similaires dans le code existant ?"**
-18. **"Quelle est la mécanique technique EXACTE que tu veux réutiliser ?"**
-19. **"Y a-t-il des callbacks/hooks existants à modifier ou créer ?"**
-20. **"Comment s'intègre cette feature avec l'architecture actuelle ?"**
-
-### **✅ Workflow Obligatoire Amélioré :**
-1. 🔍 **Consulter `.cursor/` rules** pour comprendre l'architecture
-2. 🔍 **Analyser le code existant** avec `codebase_search`
-3. 🤔 **Poser TOUTES les questions** de compréhension
-4. 💾 **Sauvegarder dans drafts/** 
-5. ✅ **Validation utilisateur**
-6. 🚀 **Publication avec syntax correcte GitHub API**
-
-### **✅ Format GitHub API Correct :**
-```bash
-# Pour mettre à jour uniquement le body (sans changer le titre)
-python3 github-api.py update [repo] [numero] "" "$(cat .agentova-tools/drafts/fichier.md)"
-
-# Pour créer une nouvelle issue
-python3 github-api.py create [repo] "Titre" "$(cat .agentova-tools/drafts/fichier.md)"
-```
-
----
-
-## 🎯 **OBJECTIF : ZERO INVENTION - 100% QUESTIONS + ÉCRITURE**
-
-Le développeur lit l'issue améliorée et comprend EXACTEMENT quoi faire grâce aux explications de Samy !
+L'IA pose toutes les questions, écrit exactement ce que Samy explique dans un fichier draft, permet les modifications, et c'est TERMINÉ ! Pas de publication automatique sur GitHub.
